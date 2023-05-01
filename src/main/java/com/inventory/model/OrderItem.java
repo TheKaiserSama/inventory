@@ -1,36 +1,42 @@
 package com.inventory.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "order_items")
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String description;
-    private String picture;
+    private double price;
+    private double discount;
+    private int quantity;
+    private Date createdAt;
+    private Date updatedAt;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
-    private Set<Product> products = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
 }

@@ -32,7 +32,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     private String summary;
     private Date createdAt;
@@ -47,6 +47,9 @@ public class Product {
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Item> itemLista = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Item> items = new ArrayList<>();
 
 }
