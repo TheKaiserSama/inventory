@@ -13,27 +13,30 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
-@Entity
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "brands")
-public class Brand {
+@NoArgsConstructor
+@Entity
+@Table(name = "customers")
+public class Customer {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String summary;
-    private Date createdAt;
-    private Date updatedAt;
-    private String content;
+    private String companyName;
+    private String contactName;
+    private String contactTitle;
+    private String address;
+    private String city;
+    private String region;
+    private String postalCode;
+    private String country;
+    private String phone;
 
-    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-    private List<Item> items = new ArrayList<>();
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 
 }
