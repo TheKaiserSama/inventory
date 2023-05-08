@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,7 +42,11 @@ public class Item {
     private boolean available;
     private int createdBy;
     private int updateBy;
+
+    @CreationTimestamp
     private Date createdAt;
+
+    @UpdateTimestamp
     private Date updateAt;
 
     @ManyToOne

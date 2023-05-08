@@ -18,6 +18,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +45,11 @@ public class Product {
     private String name;
 
     private String summary;
+
+    @CreationTimestamp
     private Date createdAt;
+
+    @UpdateTimestamp
     private Date updatedAt;
 
     @ManyToMany(fetch = FetchType.LAZY)

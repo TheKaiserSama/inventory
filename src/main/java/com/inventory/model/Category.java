@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class Category {
     private Long id;
 
     @Column(unique = true)
+    @Size(min = 3, message = "Category name must be at least 3 characters long")
     @NotBlank(message = "The name category is required")
     private String name;
 

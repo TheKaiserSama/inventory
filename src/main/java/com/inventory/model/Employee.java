@@ -9,6 +9,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,8 +35,13 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Firstname is required")
     private String firstName;
+
+    @NotBlank(message = "Lastname is required")
     private String lastName;
+
     private String title;
     private String titleOfCourtesy;
     private Date birthDate;
@@ -48,6 +55,8 @@ public class Employee {
     private String extension;
     private String photoUrl;
     private String notes;
+
+    @PositiveOrZero(message = "The employee's salary cannot be negative")
     private double salary;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)

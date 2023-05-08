@@ -14,6 +14,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +38,11 @@ public class Order {
     private double subTotal;
     private double itemDiscount;
     private double total;
+
+    @CreationTimestamp
     private Date createdAt;
+
+    @UpdateTimestamp
     private Date updatedAt;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

@@ -12,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
@@ -30,7 +32,11 @@ public class OrderDetail {
     private double price;
     private double discount;
     private int quantity;
+
+    @CreationTimestamp
     private Date createdAt;
+
+    @UpdateTimestamp
     private Date updatedAt;
 
     @ManyToOne
