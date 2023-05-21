@@ -1,5 +1,6 @@
 package com.inventory.service;
 
+import com.inventory.dto.brand.BrandRequestDTO;
 import com.inventory.dto.brand.BrandResponseDTO;
 import com.inventory.exception.ResourceExistsException;
 import com.inventory.exception.ResourceNotFoundException;
@@ -31,17 +32,18 @@ public class BrandService {
                 .toList();
     }
 
-    public Brand createBrand(Brand brand) {
-        Optional<Brand> brandFound = brandRepository.findBrandByName(brand.getName());
+    public BrandResponseDTO createBrand(BrandRequestDTO brandRequestDTO) {
+        Optional<Brand> brandFound = brandRepository.findBrandByName(brandRequestDTO.getName());
         if (brandFound.isEmpty()) {
-            return brandRepository.save(brand);
+            Brand brandSaved = brandRepository.save(brandMapper.toBrand(brandRequestDTO));
+            return brandMapper.toBrandResponseDTO(brandSaved);
         }
-        throw new ResourceExistsException("Brand with name=[" + brand.getName() + "] already exists");
+        throw new ResourceExistsException("Brand with name=[" + brandRequestDTO.getName() + "] already exists");
     }
 
-    public BrandResponseDTO updateBrandById(Brand brand, Long brandId) {
+    public BrandResponseDTO updateBrandById(BrandRequestDTO brand, Long brandId) {
         BrandResponseDTO brandFound = this.getBrandById(brandId);
-        brandFound.toBuilder()
+        brandFound = brandFound.toBuilder()
                 .name(brand.getName())
                 .summary(brand.getSummary())
                 .content(brand.getContent())

@@ -1,7 +1,7 @@
 package com.inventory.controller;
 
+import com.inventory.dto.brand.BrandRequestDTO;
 import com.inventory.dto.brand.BrandResponseDTO;
-import com.inventory.model.Brand;
 import com.inventory.service.BrandService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,14 +38,14 @@ public class BrandController {
     }
 
     @PostMapping
-    public ResponseEntity<Brand> createBrand(@Valid @RequestBody Brand brand) {
-        Brand brandSaved = brandService.createBrand(brand);
+    public ResponseEntity<BrandResponseDTO> createBrand(@Valid @RequestBody BrandRequestDTO brand) {
+        BrandResponseDTO brandSaved = brandService.createBrand(brand);
         return new ResponseEntity<>(brandSaved, HttpStatus.CREATED);
     }
 
     @PutMapping("/{brandId}")
     public ResponseEntity<BrandResponseDTO> updateBrandById(
-            @RequestBody Brand brand, @PathVariable("brandId") Long brandId) {
+            @RequestBody BrandRequestDTO brand, @PathVariable("brandId") Long brandId) {
         BrandResponseDTO brandUpdated = brandService.updateBrandById(brand, brandId);
         return new ResponseEntity<>(brandUpdated, HttpStatus.OK);
     }

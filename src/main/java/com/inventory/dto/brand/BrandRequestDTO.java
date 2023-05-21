@@ -1,13 +1,15 @@
 package com.inventory.dto.brand;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+import java.io.Serializable;
+
+@Data
+@AllArgsConstructor
 @Builder(toBuilder = true)
-public class BrandRequestDTO {
+public class BrandRequestDTO implements Serializable {
 
     private String name;
     private String summary;
