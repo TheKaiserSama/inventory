@@ -1,5 +1,6 @@
 package com.inventory.service;
 
+import com.inventory.dto.brand.BrandListResponseDTO;
 import com.inventory.dto.brand.BrandRequestDTO;
 import com.inventory.dto.brand.BrandResponseDTO;
 import com.inventory.exception.ResourceExistsException;
@@ -8,9 +9,10 @@ import com.inventory.mapper.BrandMapper;
 import com.inventory.model.Brand;
 import com.inventory.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,15 +27,13 @@ public class BrandService {
         return brand.orElseThrow(() -> new ResourceNotFoundException("Brand with id=[" + brandId + "] not found"));
     }
 
-    public List<BrandResponseDTO> getAllBrands() {
-        return brandRepository.findAll()
-                .stream()
-                .map(brandMapper::toBrandResponseDTO)
-                .toList();
+    public BrandListResponseDTO getAllBrands(Pageable pageable) {
+        Page<Brand> brandPage = brandRepository.findAll(pageable);
+        return brandMapper.toBrandListResponseDTO(brandPage);
     }
 
     public BrandResponseDTO createBrand(BrandRequestDTO brandRequestDTO) {
-        Optional<Brand> brandFound = brandRepository.findBrandByName(brandRequestDTO.getName());
+        Optional<Brand> brandFound = brandRepository.findBrandByNameIgnoreCase(brandRequestDTO.getName());
         if (brandFound.isEmpty()) {
             Brand brandSaved = brandRepository.save(brandMapper.toBrand(brandRequestDTO));
             return brandMapper.toBrandResponseDTO(brandSaved);
